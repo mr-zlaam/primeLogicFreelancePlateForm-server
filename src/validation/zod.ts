@@ -410,3 +410,25 @@ export const blogPostSchema = z.object({
     .min(1, { message: "blogBody is required!!" })
     .min(3, { message: "blogBody must be at least 3 characters long." })
 });
+// Service schema
+export const serviceSchema = z.object({
+  name: z
+    .string({ message: "service name is required!!" })
+    .min(1, { message: "service name is required!!" })
+    .min(3, { message: "service name must be at least 3 characters long." })
+    .max(450, { message: "service name can be at most 450 characters long." }),
+  subServiceTitle: z
+    .string({ message: "sub-service title is required!!" })
+    .min(1, { message: "sub-service title is required!!" })
+    .min(3, { message: "sub-service title must be at least 3 characters long." })
+    .max(450, { message: "sub-service title can be at most 450 characters long." }),
+  subServiceDescription: z
+    .string({ message: "sub-service description is required!!" })
+    .min(1, { message: "sub-service description is required!!" })
+    .min(3, { message: "sub-service description must be at least 3 characters long." })
+    .max(650, { message: "sub-service description can be at most 450 characters long." })
+  // serviceDetail: z
+  //   .string({ message: "service detail is required!!" })
+  //   .min(1, { message: "service detail is required!!" })
+  //   .min(3, { message: "service detail must be at least 3 characters long." })
+});

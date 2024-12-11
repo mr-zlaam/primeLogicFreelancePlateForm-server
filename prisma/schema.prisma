@@ -1,7 +1,7 @@
 generator client {
   provider = "prisma-client-js"
 
-  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+  previewFeatures = ["fullTextSearchPostgres"]
 }
 
 datasource db {
@@ -177,14 +177,53 @@ model Newsletter {
   createdAt DateTime @default(now())
 }
 
-model NavigationPages {
-  id                   Int       @id @default(autoincrement())
-  navigationPageConfig Json[]
-  trashedBy            String?
-  trashedAt            DateTime?
 
-  @@index([trashedAt])
-  @@index([trashedBy])
+
+model ServiceCategory {
+  id            String        @id @default(cuid())
+  name          String
+  subcategories Service[] // One-to-Many relation with Subcategory
+  @@index([name,id]) // Composite index to enforce and speed up queries
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  categoryId  String // Explicit index on categoryId for efficient lookups
+  name        String
+  slug        String   @unique
+  description String
+  category    ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  detailPage  String?
+
+  @@index([categoryId,name,slug]) // Composite index to enforce and speed up queries
+}
+
+
+
+
+
+
+
+
+
+
+
+model Industry {
+  id                     Int     @id @default(autoincrement())
+  name                   String  @unique
+  subIndustryTitle       String? @unique
+  subIndustryDescription String?
+  industryDetail         String?
+  slug                   String  @unique
+}
+
+model Technology {
+  id                       Int     @id @default(autoincrement())
+  name                     String  @unique
+  subTechnologyTitle       String? @unique
+  subTechnologyDescription String?
+  technologyDetail         String?
+  slug                     String  @unique
 }
 
 model GetQuote {
