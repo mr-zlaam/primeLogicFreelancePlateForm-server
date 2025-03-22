@@ -22,10 +22,16 @@ export default {
   // ** Freelancer will request for create an account
   getFreeLancerJoinUsRequest: asyncHandler(async (req, res) => {
     const freeLancer = req.body as TFREELANCER;
-    const isExist = await db.freeLancersRequest.findUnique({
+    const isExist = await db.freeLancersRequest.findFirst({
       where: {
-        email: freeLancer.email,
-        phone: freeLancer.phone
+        OR: [
+          {
+            email: freeLancer.email
+          },
+          {
+            phone: freeLancer.phone
+          }
+        ]
       }
     });
     if (isExist) throw { status: BADREQUESTCODE, message: "You've already requested for joining us" };
@@ -147,7 +153,12 @@ export default {
         role: "FREELANCER",
         phone: isRequestExist.phone,
         password: hashedPassword,
-        emailVerifiedAt: new Date()
+        emailVerifiedAt: new Date(),
+        portfolioUrl: isRequestExist.yourPortfolio,
+        address: isRequestExist.address,
+        country: isRequestExist?.country,
+        niche: isRequestExist?.niche || "",
+        yearsOfExperience: isRequestExist.yearOfExperience
       }
     });
 

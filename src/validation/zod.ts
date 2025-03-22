@@ -379,7 +379,15 @@ export const freeLancerSchema = z.object({
     .string({ message: "yourTopProject3 is required!!" })
     .min(1, { message: "yourTopProject3 is required!!" })
     .min(3, { message: "yourTopProject3 must be at least 3 characters long." })
-    .max(450, { message: "yourTopProject3 can be at most 450 characters long." })
+    .max(450, { message: "yourTopProject3 can be at most 450 characters long." }),
+  country: z
+    .string({ message: "country should be string" })
+    .min(2, { message: "country should be atleast 2 character" })
+    .max(50, { message: "country can have only upto 50 characters" }),
+  yearsOfExperience: z
+    .string({ message: "yearsOfExperience should be string" })
+    .min(1, { message: "yearsOfExperience should be atleast 1" })
+    .max(100, { message: "yearsOfExperience can have only upto 100" })
 });
 // ** Project Schema
 export const projectSchema = z.object({

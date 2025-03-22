@@ -50,7 +50,9 @@ model User {
   address                 String?
   detail                  String?
   portfolioUrl            String?
+  yearsOfExperience       String?   @default("")
   niche                   String?
+  country                 String?
   topProjects             String[]  @default([])
   kpi                     Json[]    @default([])
   kpiHistory              Json[]    @default([])
@@ -275,21 +277,23 @@ model HireUs {
 }
 
 model FreeLancersRequest {
-  id              Int       @id @default(autoincrement())
-  name            String
-  email           String    @unique
-  phone           String    @unique
-  address         String
-  detail          String
-  yourPortfolio   String
-  niche           String
-  yourTopProject1 String
-  yourTopProject2 String
-  yourTopProject3 String
-  isAccepted      Boolean   @default(false)
-  createdAt       DateTime  @default(now())
-  trashedBy       String?
-  trashedAt       DateTime?
+  id               Int       @id @default(autoincrement())
+  name             String
+  email            String    @unique
+  phone            String    @unique
+  address          String
+  detail           String
+  yourPortfolio    String
+  niche            String
+  yourTopProject1  String
+  yourTopProject2  String
+  yourTopProject3  String
+  country          String?   @default("")
+  yearOfExperience String?   @default("")
+  isAccepted       Boolean   @default(false)
+  createdAt        DateTime  @default(now())
+  trashedBy        String?
+  trashedAt        DateTime?
 
   @@index([email])
   @@index([id])
