@@ -1,4 +1,4 @@
-import type { User } from "@prisma/client";
+import type { GetQuote, User } from "@prisma/client";
 
 // Single line types
 export type TENV = "DEVELOPMENT" | "PRODUCTION";
@@ -105,7 +105,7 @@ export type IMENUITEM = {
   children?: IMENUITEM[];
 };
 
-export type TGETQUOTE = {
+export type TGETQUOTE = GetQuote & {
   name: string;
   email: string;
   phone: string;

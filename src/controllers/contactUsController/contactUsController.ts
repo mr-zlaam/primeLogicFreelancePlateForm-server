@@ -14,15 +14,19 @@ export default {
   createMessage: asyncHandler(async (req, res) => {
     // ** Validation is handled by middleware
     const { firstName, lastName, email, message } = req.body as TCONTACTUS;
-    await recieveMessageFromUser(email, HOST_EMAIL, message, `${firstName} ${lastName}`);
-    await db.contactUs.create({
-      data: {
-        firstName,
-        lastName,
-        email,
-        message
-      }
-    });
+    const user = await findUniqueUser(email);
+    await Promise.all([
+      recieveMessageFromUser(email, HOST_EMAIL, message, `${firstName} ${lastName}`),
+      db.contactUs.create({
+        data: {
+          firstName,
+          lastName,
+          email,
+          message,
+          from: user ? user.role : "Unregistered User"
+        }
+      })
+    ]);
     httpResponse(req, res, SUCCESSCODE, SUCCESSMSG, { firstName, lastName, email, message });
   }),
   // ** get all message controller
@@ -39,7 +43,7 @@ export default {
         orderBy: {
           createdAt: "desc"
         },
-        select: { id: true, email: true, message: true, firstName: true, lastName: true, createdAt: true }
+        select: { id: true, email: true, message: true, firstName: true, lastName: true, from: true, createdAt: true }
       }),
       db.contactUs.count({ where: { trashedBy: null } })
     ]);
@@ -51,7 +55,7 @@ export default {
       totalPages,
       limit,
       totalMessages,
-      messages
+      ...messages
     });
   }),
 
@@ -64,7 +68,7 @@ export default {
         id: Number(id),
         trashedBy: null
       },
-      select: { id: true, email: true, message: true, firstName: true, lastName: true, createdAt: true }
+      select: { id: true, email: true, message: true, firstName: true, lastName: true, from: true, createdAt: true }
     });
     if (!message) throw { status: NOTFOUNDCODE, message: NOTFOUNDMSG };
     else {

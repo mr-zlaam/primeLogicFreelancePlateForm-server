@@ -9,7 +9,7 @@ import { asyncHandler } from "../../utils/asyncHandlerUtils";
 export default {
   // **   create quote controller
   createQuote: asyncHandler(async (req, res) => {
-    const { name, email, phone, company, address, deadline, detail, services } = req.body as TGETQUOTE;
+    const { name, email, phone, company, address, deadline, detail, services, ...rest } = req.body as TGETQUOTE;
 
     const data: TGETQUOTE = {
       name,
@@ -20,7 +20,8 @@ export default {
       // Optional fields
       company: company ?? "",
       detail: detail ?? "",
-      deadline: deadline || ""
+      deadline: deadline || "",
+      ...rest
     };
     const createdQuote = await db.getQuote.create({ data });
     await sendThankYouForQuote(createdQuote.email, createdQuote.name);

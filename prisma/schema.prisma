@@ -162,6 +162,7 @@ model ContactUs {
   lastName  String
   email     String
   message   String
+  from      String    @default("")
   createdAt DateTime  @default(now())
   trashedBy String?
   trashedAt DateTime?
@@ -211,6 +212,8 @@ model GetQuote {
   deadline  String?
   services  String
   detail    String?   @default("")
+  niche     String?
+  budget    String?
   createdAt DateTime  @default(now())
   trashedBy String?
   trashedAt DateTime?
