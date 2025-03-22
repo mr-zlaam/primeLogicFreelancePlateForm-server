@@ -60,7 +60,9 @@ export default {
             uid: true,
             fullName: true,
             email: true,
-            username: true
+            username: true,
+            phone: true,
+            country: true
           }
         }
       }

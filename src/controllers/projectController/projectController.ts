@@ -63,7 +63,7 @@ export default {
         niche: true,
         difficultyLevel: true,
         clientWhoPostedThisProject: { select: { username: true, uid: true, fullName: true, email: true } },
-        interestedFreelancers: { select: { username: true, uid: true, fullName: true, email: true } },
+        interestedFreelancers: { select: { username: true, uid: true, fullName: true, email: true, portfolioUrl: true, phone: true } },
         selectedFreelancers: { select: { username: true, uid: true, fullName: true, email: true } },
         projectSlug: true,
         projectStatus: true,
