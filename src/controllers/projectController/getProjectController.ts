@@ -62,7 +62,8 @@ export default {
             email: true,
             username: true,
             phone: true,
-            country: true
+            country: true,
+            address: true
           }
         }
       }
