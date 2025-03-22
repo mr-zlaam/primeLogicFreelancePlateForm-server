@@ -1,3 +1,5 @@
+import type { User } from "@prisma/client";
+
 // Single line types
 export type TENV = "DEVELOPMENT" | "PRODUCTION";
 
@@ -33,7 +35,7 @@ export type TUSER = {
   createdAt?: Date;
   updatedAt?: Date;
 };
-export type TUSERREGISTER = {
+export type TUSERREGISTER = User & {
   uid?: string;
   username: string;
   fullName: string;

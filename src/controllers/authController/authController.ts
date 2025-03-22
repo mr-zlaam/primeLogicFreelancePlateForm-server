@@ -19,7 +19,7 @@ export default {
   registerUser: asyncHandler(async (req: Request, res: Response) => {
     // validation is already handled by the middleware
     const userData = req.body as TUSERREGISTER;
-    const { username, fullName, email, password } = userData;
+    const { username, fullName, email, password, country } = userData;
     const isUserExist = await db.user.findFirst({
       where: { OR: [{ username: username.toLowerCase() }, { email: email.toLowerCase() }] }
     });
@@ -37,7 +37,8 @@ export default {
         role: filterAdmin(email) ? "ADMIN" : "CLIENT",
         otpPassword: filterAdmin(email) ? null : hashedOTPPassword,
         otpPasswordExpiry: filterAdmin(email) ? null : generateOneTimePassword.otpExpiry,
-        emailVerifiedAt: filterAdmin(email) ? new Date() : null
+        emailVerifiedAt: filterAdmin(email) ? new Date() : null,
+        country
       }
     });
     if (!filterAdmin(email)) {

@@ -34,7 +34,11 @@ export const userRegistrationSchema = z.object({
     .string({ message: "password is required!!" })
     .min(1, { message: "password is required!!" })
     .min(6, { message: "password must be at least 6 characters long." })
-    .max(50, { message: "password can be at most 50 characters long." })
+    .max(50, { message: "password can be at most 50 characters long." }),
+  country: z
+    .string({ message: "country should be string" })
+    .min(1, { message: "country is required!!" })
+    .max(50, { message: "country can have only upto 50 characters" })
 });
 
 // ** user login schema
