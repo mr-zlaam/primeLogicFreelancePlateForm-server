@@ -108,6 +108,8 @@ model Project {
   commentByClientAfterProjectCompletion String?
   starsByClientAfterProjectCompletion   Int?
   projectCompletedOn                    DateTime?
+  requestExtensionInDeadline            DateTime?
+  projectBannerMessage                  String?          @default("")
   projectType                           PROJECT_TYPE     @default(INHOUSE)
   trashedBy                             String?
   trashedAt                             DateTime?

@@ -62,26 +62,37 @@ projectRouter.route("/updateProgressOfProject/:projectSlug").patch(
   updateProjectController.updateProgressOfProject
 );
 
-projectRouter.route("/changeProjectStatus/:projectSlug").patch(
-  //  authMiddleware.checkIfUserIAdminOrModerator,
-  updateProjectController.changeProjectStatus
-);
+projectRouter
+  .route("/changeProjectStatus/:projectSlug")
+  .patch(authMiddleware.checkToken, authMiddleware.checkIfUserIAdminOrModerator, updateProjectController.changeProjectStatus);
 
-projectRouter.route("/changeProjectType/:projectSlug").patch(
-  //  authMiddleware.checkIfUserIAdminOrModerator,
-  updateProjectController.changeProjectType
-);
-projectRouter.route("/writeReviewAndGiveRating/:projectSlug").patch(
-  //  authMiddleware.checkIfUserIAdminOrModerator,
-  updateProjectController.writeReviewAndGiveRating
-);
+projectRouter
+  .route("/changeProjectType/:projectSlug")
+  .patch(authMiddleware.checkToken, authMiddleware.checkIfUserIAdminOrModerator, updateProjectController.changeProjectType);
+projectRouter
+  .route("/writeReviewAndGiveRating/:projectSlug")
+  .patch(authMiddleware.checkToken, authMiddleware.checkIfUserIAdminOrModerator, updateProjectController.writeReviewAndGiveRating);
 
-projectRouter.route("/updateProjectBySlug/:projectSlug").patch(
-  //  authMiddleware.checkIfUserIAdminOrModerator,
-  validateDataMiddleware(projectSchema),
-  updateProjectController.updateProjectBySlug
-);
-projectRouter.route("/makeProjectOutsource/:projectSlug").patch(
-  //  authMiddleware.checkIfUserIAdminOrModerator,
-  updateProjectController.makeProjectOutsource
-);
+projectRouter
+  .route("/updateProjectBySlug/:projectSlug")
+  .patch(
+    authMiddleware.checkToken,
+    authMiddleware.checkIfUserIAdminOrModerator,
+    validateDataMiddleware(projectSchema),
+    updateProjectController.updateProjectBySlug
+  );
+projectRouter
+  .route("/makeProjectOutsource/:projectSlug")
+  .patch(authMiddleware.checkToken, authMiddleware.checkIfUserIAdminOrModerator, updateProjectController.makeProjectOutsource);
+
+projectRouter
+  .route("/makeProjectOutsource/:projectSlug")
+  .patch(authMiddleware.checkToken, authMiddleware.checkIfUserIAdminOrModerator, updateProjectController.makeProjectOutsource);
+
+projectRouter
+  .route("/acceptExtensionInProjectDeadline/:projectSlug")
+  .patch(authMiddleware.checkToken, authMiddleware.checkIfUserIAdminOrModerator, updateProjectController.acceptExtensionInProjectDeadline);
+
+projectRouter
+  .route("/rejectExtensionInProjectDeadline/:projectSlug")
+  .patch(authMiddleware.checkToken, authMiddleware.checkIfUserIAdminOrModerator, updateProjectController.rejectExtensionInProjectDeadline);

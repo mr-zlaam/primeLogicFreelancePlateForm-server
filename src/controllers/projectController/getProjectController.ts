@@ -147,6 +147,7 @@ export default {
         progressPercentage: true,
         niche: true,
         difficultyLevel: true,
+        projectBannerMessage: true,
         milestones: true,
         projectType: true,
         projectStatus: true,
@@ -200,6 +201,7 @@ export default {
       select: {
         id: true,
         title: true,
+        projectBannerMessage: true,
         detail: true,
         deadline: true,
         milestones: true,
@@ -293,6 +295,7 @@ export default {
         difficultyLevel: true,
         projectType: true,
         projectStatus: true,
+        projectBannerMessage: true,
         projectSlug: true,
         createdAt: true
       }

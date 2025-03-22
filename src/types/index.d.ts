@@ -192,6 +192,7 @@ export type TUPDATE_PROJECT = {
   projectStatus: TPROJECTSTATUS;
   progressPercentage: number;
   isDeadlineNeedToBeExtend: boolean;
+  requestExtensionInDeadline: string;
   difficultyLevel: "EASY" | "MEDIUM" | "HARD";
 };
 

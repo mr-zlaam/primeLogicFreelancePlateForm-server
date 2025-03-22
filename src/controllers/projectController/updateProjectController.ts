@@ -202,5 +202,34 @@ export default {
       data: { projectType: "OUTSOURCE", bounty: calculate90Percent(project?.bounty || 0) }
     });
     httpResponse(req, res, SUCCESSCODE, SUCCESSMSG, { project });
+  }),
+  acceptExtensionInProjectDeadline: asyncHandler(async (req, res) => {
+    const { projectSlug } = req.params;
+    if (!projectSlug) throw { status: BADREQUESTCODE, message: "Project slug is required." };
+    const { requestExtensionInDeadline } = req.body as TUPDATE_PROJECT;
+    const extendedDate = new Date(requestExtensionInDeadline);
+    if (isNaN(extendedDate.getTime())) throw { status: BADREQUESTCODE, message: "Invalid deadline date." };
+    if (extendedDate < new Date()) throw { status: BADREQUESTCODE, message: "Deadline must be a future date." };
+    await db.project.update({
+      where: { projectSlug: projectSlug },
+      data: {
+        requestExtensionInDeadline: null,
+        deadline: extendedDate,
+        projectBannerMessage: `Deadline extended to ${extendedDate.toLocaleDateString()}`
+      }
+    });
+    httpResponse(req, res, SUCCESSCODE, SUCCESSMSG, { message: "Deadline extended successfully" });
+  }),
+  rejectExtensionInProjectDeadline: asyncHandler(async (req, res) => {
+    const { projectSlug } = req.params;
+    if (!projectSlug) throw { status: BADREQUESTCODE, message: "Project slug is required." };
+    await db.project.update({
+      where: { projectSlug: projectSlug },
+      data: {
+        requestExtensionInDeadline: null,
+        projectBannerMessage: "Deadline extension rejected!"
+      }
+    });
+    httpResponse(req, res, SUCCESSCODE, SUCCESSMSG, { message: "Deadline extension rejected!" });
   })
 };
